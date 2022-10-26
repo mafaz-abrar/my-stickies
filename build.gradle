@@ -12,8 +12,8 @@ plugins {
 // Variables for versioning
 ext {
     // Core
-    activityVersion = '1.6.1'
-    appCompatVersion = '1.5.1'
+    activityVersion = '1.4.0'
+    appCompatVersion = '1.4.0'
 
     // Room
     roomVersion = '2.4.3'

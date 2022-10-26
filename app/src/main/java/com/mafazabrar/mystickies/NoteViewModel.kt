@@ -1,11 +1,9 @@
 package com.mafazabrar.mystickies
 
 import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import kotlinx.coroutines.launch
+import java.lang.IllegalArgumentException
 
 class NoteViewModel(private val repo: MainRepository) : ViewModel() {
 
@@ -20,5 +18,15 @@ class NoteViewModel(private val repo: MainRepository) : ViewModel() {
     // Launching scope for coroutine
     fun insert(note: Note) = viewModelScope.launch {
         repo.insert(note)
+    }
+}
+
+// Set up a simple factory to create the ViewModel - this is needed to supply the argument
+class WordViewModelFactory(private val repository: MainRepository) : ViewModelProvider.Factory {
+    override fun <T: ViewModel> create(modelClass: Class<T>): T {
+        if (modelClass.isAssignableFrom(NoteViewModel::class.java)) {
+            return NoteViewModel(repository) as T
+        }
+        throw IllegalArgumentException("Unknown ViewModel class.")
     }
 }
