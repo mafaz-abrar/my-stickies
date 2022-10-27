@@ -15,4 +15,8 @@ interface NoteDao {
     // Coroutine insert
     @Insert
     suspend fun insert(note: Note)
+
+    // Coroutine delete all
+    @Query("DELETE FROM notes")
+    suspend fun deleteAll()
 }

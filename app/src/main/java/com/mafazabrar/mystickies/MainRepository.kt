@@ -15,4 +15,10 @@ class MainRepository(private val noteDao: NoteDao) {
     suspend fun insert(note: Note) {
         noteDao.insert(note)
     }
+
+    // Coroutine delete
+    @WorkerThread
+    suspend fun deleteAll() {
+        noteDao.deleteAll()
+    }
 }

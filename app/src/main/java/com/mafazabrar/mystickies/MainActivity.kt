@@ -29,14 +29,21 @@ class MainActivity : AppCompatActivity() {
         // Get the RecyclerView
         val notesRecyclerView = findViewById<RecyclerView>(R.id.RecyclerView_Main_NoteList)
         notesRecyclerView.layoutManager = LinearLayoutManager(this)
+
+        // Using a List Adapter with DiffUtils
         adapter = NotesAdapter()
         notesRecyclerView.adapter = adapter
 
         // Observing the allNotes variable
-        viewModel.allNotes.observe(this, Observer { notes ->
-            Log.i("MAIN ACTIVITY OBSERVER", "Data updated.")
-            notes?.let { adapter.submitList(it) }
-        })
+        viewModel.allNotes.observe(this,
+            Observer { notes ->
+                Log.i("MAIN ACTIVITY OBSERVER", "Data updated.")
+                notes?.let {
+                    adapter.submitList(it)
+                }
+            })
+
+        viewModel.deleteAll()
 
         val fab = findViewById<FloatingActionButton>(R.id.FAB_Main_AddNoteButton)
         fab.setOnClickListener {

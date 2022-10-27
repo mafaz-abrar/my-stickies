@@ -69,8 +69,10 @@ class NotesAdapter: ListAdapter<Note, NotesAdapter.NoteViewHolder>(WordsComparat
     }
 }
 
+
 /*
-class NotesAdapter(private val data: List<Note>, private val listener: (Note) -> Unit)
+// Recycler View Adapter Implementation - unsure how to use the Recycler View Adapter class here
+class NotesAdapter(private val data: List<Note>?, private val listener: (Note?) -> Unit)
     : RecyclerView.Adapter<NotesAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -82,12 +84,12 @@ class NotesAdapter(private val data: List<Note>, private val listener: (Note) ->
     }
 
     override fun getItemCount(): Int {
-        return data.size
+        return data?.size ?: 0
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val item = data[position]
-        Log.i("NOTES ADAPTER", "Binding item: \'${item.title}\'")
+        val item = data?.get(position)
+        Log.i("NOTES ADAPTER", "Binding item: \'${item?.title}\'")
         holder.bind(item)
     }
 
@@ -101,16 +103,17 @@ class NotesAdapter(private val data: List<Note>, private val listener: (Note) ->
 
         // This function performs the actual 'binding' of the data
         // to the ViewHolder
-        fun bind(item: Note) {
-            Log.i("NOTES ADAPTER", "View Holder binding item: ${item.title}")
+        fun bind(item: Note?) {
+            Log.i("NOTES ADAPTER", "View Holder binding item: ${item?.title}")
 
             // Set the other values
-            noteTitle.text = item.data
-            noteData.text = item.title
-            noteSubnotes.text = item.childrenCount.toString()
+            noteTitle.text = item?.data
+            noteData.text = item?.title
+            noteSubnotes.text = item?.childrenCount.toString()
 
             // Set onClickListener to the listener val
             root.setOnClickListener() { listener(item) }
         }
     }
-} */
+}
+*/

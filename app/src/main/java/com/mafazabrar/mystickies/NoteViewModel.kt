@@ -5,6 +5,7 @@ import androidx.lifecycle.*
 import kotlinx.coroutines.launch
 import java.lang.IllegalArgumentException
 
+// View Model for each Note
 class NoteViewModel(private val repo: MainRepository) : ViewModel() {
 
     // Init block
@@ -18,6 +19,11 @@ class NoteViewModel(private val repo: MainRepository) : ViewModel() {
     // Launching scope for coroutine
     fun insert(note: Note) = viewModelScope.launch {
         repo.insert(note)
+    }
+
+    // Launching scope for coroutine
+    fun deleteAll() = viewModelScope.launch {
+        repo.deleteAll()
     }
 }
 
