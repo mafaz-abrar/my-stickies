@@ -11,6 +11,7 @@ import android.widget.EditText
 // This Activity will store a new Note into the database,
 // as added by the user.
 class NewNoteActivity : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_new_note)
@@ -21,7 +22,7 @@ class NewNoteActivity : AppCompatActivity() {
         val saveNoteButton = findViewById<Button>(R.id.Button_NewNoteActivity_SaveNote)
         val discardNoteButton = findViewById<Button>(R.id.Button_NewNoteActivity_DiscardNote)
 
-        // Listen to t
+        // On clicking the save button:
         saveNoteButton.setOnClickListener() {
             val replyIntent = Intent()
 
@@ -51,5 +52,30 @@ class NewNoteActivity : AppCompatActivity() {
     override fun onBackPressed() {
         super.onBackPressed()
 
+        val noteTitleEditTextView = findViewById<EditText>(R.id.EditText_NewNoteActivity_NoteTitle)
+        val noteContentEditTextView = findViewById<EditText>(R.id.EditText_NewNoteActivity_NoteContent)
+
+        val replyIntent = Intent()
+
+        if (TextUtils.isEmpty(noteTitleEditTextView.text)) {
+
+            // If title not set, send error result
+            setResult(RESULT_MISSING_TITLE, replyIntent)
+
+        } else {
+            // If title set:
+
+            // Place the title and content into a reply Intent
+            val title = noteTitleEditTextView.text.toString()
+            val content = noteContentEditTextView.text.toString()
+
+            replyIntent.putExtra(KEY_REPLY_NOTE_TITLE, title)
+            replyIntent.putExtra(KEY_REPLY_NOTE_CONTENT, content)
+
+            // Set the result of the Activity
+            setResult(Activity.RESULT_OK, replyIntent)
+        }
+
+        finish()
     }
 }

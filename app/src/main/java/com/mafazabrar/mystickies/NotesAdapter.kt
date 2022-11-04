@@ -12,10 +12,12 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 
-class NotesAdapter: ListAdapter<Note, NotesAdapter.NoteViewHolder>(WordsComparator()) {
+class NotesAdapter(private val listener: (Note) -> Unit): ListAdapter<Note, NotesAdapter.NoteViewHolder>(WordsComparator()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoteViewHolder {
-        return NoteViewHolder.create(parent)
+        val view: View = LayoutInflater.from(parent.context)
+            .inflate(R.layout.layout_note_collapsed, parent, false)
+        return NoteViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: NoteViewHolder, position: Int) {
@@ -23,7 +25,7 @@ class NotesAdapter: ListAdapter<Note, NotesAdapter.NoteViewHolder>(WordsComparat
         holder.bind(item)
     }
 
-    class NoteViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    inner class NoteViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         private val root: ConstraintLayout = view.findViewById(R.id.ConstraintLayout_LayoutNoteCollapsed_Root)
         private val noteTitle: TextView = view.findViewById(R.id.TextView_LayoutNoteCollapsed_NoteTitle)
         private val noteData: TextView = view.findViewById(R.id.TextView_LayoutNoteCollapsed_NoteData)
@@ -38,15 +40,9 @@ class NotesAdapter: ListAdapter<Note, NotesAdapter.NoteViewHolder>(WordsComparat
             noteTitle.text = item.title
             noteData.text = item.data
             noteSubnotes.text = item.childrenCount.toString()
-        }
 
-        companion object {
-            // Moved the code from onCreateViewHolder to here.
-            fun create(parent: ViewGroup): NoteViewHolder {
-                val view: View = LayoutInflater.from(parent.context)
-                    .inflate(R.layout.layout_note_collapsed, parent, false)
-                return NoteViewHolder(view)
-            }
+            // Set onClickListener to the listener val
+            root.setOnClickListener() { listener(item) }
         }
     }
 

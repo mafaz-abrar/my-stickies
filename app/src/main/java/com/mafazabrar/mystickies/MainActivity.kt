@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 const val REQUEST_CODE_NEW_NOTE = 1
+const val REQUEST_CODE_UPDATE_NOTE = 2
 
 const val RESULT_MISSING_TITLE = 1
 
@@ -32,6 +33,13 @@ class MainActivity : AppCompatActivity() {
         WordViewModelFactory((application as MainApplication).repository)
     }
 
+    private fun launchUpdateActivity(item: Note) {
+        // On tap, start the New Note Activity for result
+        // with the Update Note request Code
+        val intent = Intent(this, NewNoteActivity::class.java)
+        startActivityForResult(intent, REQUEST_CODE_UPDATE_NOTE)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -41,7 +49,11 @@ class MainActivity : AppCompatActivity() {
         notesRecyclerView.layoutManager = LinearLayoutManager(this)
 
         // Using a List Adapter with DiffUtils
-        adapter = NotesAdapter()
+        adapter = NotesAdapter() {
+            // Listener that launches the "New" Note Activity
+            // for viewing and updating the Note.
+            launchUpdateActivity(it)
+        }
         notesRecyclerView.adapter = adapter
 
         // Observing the allNotes variable
@@ -59,10 +71,10 @@ class MainActivity : AppCompatActivity() {
         // Get the Floating Action Button
         val fab = findViewById<FloatingActionButton>(R.id.FAB_Main_AddNoteButton)
 
-        // On Click, start the New Note Activity for result
+        // On Click, start the New Note Activity for result, with the new note
+        // request code
         fab.setOnClickListener {
-            val intent = Intent(this@MainActivity, NewNoteActivity::class.java)
-
+            val intent = Intent(this, NewNoteActivity::class.java)
             startActivityForResult(intent, REQUEST_CODE_NEW_NOTE)
         }
     }
@@ -91,5 +103,10 @@ class MainActivity : AppCompatActivity() {
             // Show a Toast to confirm the action
             Toast.makeText(applicationContext, R.string.note_saved_message, Toast.LENGTH_LONG).show()
         }
+
+        else if (requestCode == REQUEST_CODE_UPDATE_NOTE && resultCode == Activity.RESULT_OK) {
+
+        }
+
     }
 }
