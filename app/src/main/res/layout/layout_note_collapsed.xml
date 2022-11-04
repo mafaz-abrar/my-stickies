@@ -5,31 +5,35 @@
     android:id="@+id/ConstraintLayout_LayoutNoteCollapsed_Root"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@android:color/holo_orange_light"
+    android:layout_marginTop="10dp"
+    android:layout_marginBottom="10dp"
+    android:background="@drawable/rounded_corner"
+    android:elevation="5dp"
     android:padding="10dp">
 
     <TextView
         android:id="@+id/TextView_LayoutNoteCollapsed_NoteTitle"
+        style="@style/NoteTitleText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="TextView"
-        android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/TextView_LayoutNoteCollapsed_NoteData"
+        style="@style/NoteContentText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         android:text="TextView"
-        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/TextView_LayoutNoteCollapsed_NoteTitle" />
 
     <TextView
         android:id="@+id/TextView_LayoutNoteCollapsed_SubNotes"
+        style="@style/NoteCountText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="TextView"
