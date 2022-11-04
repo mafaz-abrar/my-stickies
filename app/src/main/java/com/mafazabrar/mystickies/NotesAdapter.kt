@@ -35,8 +35,8 @@ class NotesAdapter: ListAdapter<Note, NotesAdapter.NoteViewHolder>(WordsComparat
             Log.i("NOTES ADAPTER", "View Holder binding item: ${item.title}")
 
             // Set the other values
-            noteTitle.text = item.data
-            noteData.text = item.title
+            noteTitle.text = item.title
+            noteData.text = item.data
             noteSubnotes.text = item.childrenCount.toString()
         }
 
