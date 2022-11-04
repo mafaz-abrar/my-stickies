@@ -16,6 +16,12 @@ class MainRepository(private val noteDao: NoteDao) {
         noteDao.insert(note)
     }
 
+    // Coroutine update
+    @WorkerThread
+    suspend fun update(note: Note) {
+        noteDao.update(note)
+    }
+
     // Coroutine delete
     @WorkerThread
     suspend fun deleteAll() {

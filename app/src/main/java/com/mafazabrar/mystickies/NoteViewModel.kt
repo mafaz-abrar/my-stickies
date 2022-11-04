@@ -17,13 +17,35 @@ class NoteViewModel(private val repo: MainRepository) : ViewModel() {
     val allNotes: LiveData<List<Note>> = repo.allNotes.asLiveData()
 
     // Launching scope for coroutine
-    fun insert(note: Note) = viewModelScope.launch {
+    private fun insert(note: Note) = viewModelScope.launch {
         repo.insert(note)
     }
 
     // Launching scope for coroutine
-    fun deleteAll() = viewModelScope.launch {
+    private fun update(note: Note) = viewModelScope.launch {
+        repo.update(note)
+    }
+
+    // Launching scope for coroutine
+    private fun deleteAll() = viewModelScope.launch {
         repo.deleteAll()
+    }
+
+    fun insertNote(note: Note) {
+        insert(note)
+        Log.i("VIEW MODEL","Inserted Note: ${note.title}")
+    }
+
+    fun updateNote(noteID: Int, noteTitle: String, noteContent: String) {
+        val newNote = Note(noteID, noteTitle, noteContent, 0, "")
+        update(newNote)
+        Log.i("VIEW MODEL", "Updated Note: ${newNote.title}")
+    }
+
+    fun deleteAllNotes()
+    {
+        deleteAll()
+        Log.i("VIEW MODEL", "Deleted all notes.")
     }
 }
 

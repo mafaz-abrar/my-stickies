@@ -3,6 +3,7 @@ package com.mafazabrar.mystickies
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
+import androidx.room.Update
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -15,6 +16,11 @@ interface NoteDao {
     // Coroutine insert
     @Insert
     suspend fun insert(note: Note)
+
+    // Coroutine update
+    @Update
+    suspend fun update(note: Note)
+
 
     // Coroutine delete all
     @Query("DELETE FROM notes")

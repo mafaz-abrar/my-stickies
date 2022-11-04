@@ -4,8 +4,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.RatingBar
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.DiffUtil
@@ -38,7 +36,7 @@ class NotesAdapter(private val listener: (Note) -> Unit): ListAdapter<Note, Note
 
             // Set the other values
             noteTitle.text = item.title
-            noteData.text = item.data
+            noteData.text = item.content
             noteSubnotes.text = item.childrenCount.toString()
 
             // Set onClickListener to the listener val
@@ -57,7 +55,7 @@ class NotesAdapter(private val listener: (Note) -> Unit): ListAdapter<Note, Note
             return (
                 oldItem.id == newItem.id &&
                 oldItem.title == newItem.title &&
-                oldItem.data == newItem.data &&
+                oldItem.content == newItem.content &&
                 oldItem.childrenCount == newItem.childrenCount &&
                 oldItem.children == newItem.children
             )

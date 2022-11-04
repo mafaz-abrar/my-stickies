@@ -12,4 +12,7 @@
     <string name="note_missing_title_message">Missing title. Note discarded.</string>
     <string name="note_discarded_message">Note discarded.</string>
     <string name="note_deleted_message">Note deleted.</string>
+
+    <string name="note_add_title">Add Note</string>
+    <string name="note_edit_title">Edit Note</string>
 </resources>
