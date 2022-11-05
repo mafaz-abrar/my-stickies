@@ -1,14 +1,18 @@
 package com.mafazabrar.mystickies
 
+import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 @Entity(tableName = "notes")
 data class Note(
     @PrimaryKey(autoGenerate = true) val id: Int,
-    val title: String,
-    val content: String,
-    @ColumnInfo(name = "children_count") val childrenCount: Int,
-    val children: String) {
+    @ColumnInfo(name = "title") val title: String,
+    @ColumnInfo(name = "content") val content: String,
+    @ColumnInfo(name = "parent_id") val parentID: String,
+    @ColumnInfo(name = "children_count") val childrenCount: Int
+    ) : Parcelable {
 }

@@ -50,7 +50,7 @@ class NoteViewModel(private val repo: MainRepository) : ViewModel() {
 }
 
 // Set up a simple factory to create the ViewModel - this is needed to supply the argument
-class WordViewModelFactory(private val repository: MainRepository) : ViewModelProvider.Factory {
+class NoteListViewModelFactory(private val repository: MainRepository) : ViewModelProvider.Factory {
     override fun <T: ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(NoteViewModel::class.java)) {
             return NoteViewModel(repository) as T

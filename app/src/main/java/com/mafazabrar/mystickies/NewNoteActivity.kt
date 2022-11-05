@@ -8,16 +8,22 @@ import android.text.TextUtils
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
+import androidx.lifecycle.ViewModelProvider
 
 // This Activity will store a new Note into the database,
 // as added by the user.
 class NewNoteActivity : AppCompatActivity() {
+
+    // View Model for business logic
+    private lateinit var viewModel: DetailNoteViewModel
 
     private var editState = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_new_note)
+
+        viewModel = ViewModelProvider(this).get(DetailNoteViewModel::class.java)
 
         title = intent.getStringExtra(KEY_SCREEN_TITLE)
 

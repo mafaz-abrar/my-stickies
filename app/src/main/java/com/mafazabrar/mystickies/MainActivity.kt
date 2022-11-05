@@ -37,7 +37,7 @@ class MainActivity : AppCompatActivity() {
     // Add the ViewModel as a member variable using the viewModels delegate
     // We use a factory to pass in the argument repository
     private val viewModel: NoteViewModel by viewModels {
-        WordViewModelFactory((application as MainApplication).repository)
+        NoteListViewModelFactory((application as MainApplication).repository)
     }
 
     private fun launchUpdateActivity(note: Note) {
@@ -49,6 +49,12 @@ class MainActivity : AppCompatActivity() {
         intent.putExtra(KEY_NOTE_TITLE, note.title)
         intent.putExtra(KEY_NOTE_CONTENT, note.content)
         startActivityForResult(intent, REQUEST_CODE_UPDATE_NOTE)
+    }
+
+    private fun showNewStuff() {
+        // Somehow change the list
+        // submitted to the adapter.
+        Log.i("MAIN ACTIVITY","New Stuff")
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -63,6 +69,14 @@ class MainActivity : AppCompatActivity() {
         adapter = NotesAdapter() {
             // Listener that launches the "New" Note Activity
             // for viewing and updating the Note.
+
+            // Check if parent note was clicked,
+            // submit a different list if parent
+            // note clicked.
+            if (1 == 1) {
+                showNewStuff()
+            }
+
             launchUpdateActivity(it)
         }
         notesRecyclerView.adapter = adapter
