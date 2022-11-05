@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/orange_gold_lighter"
-    tools:context=".NewNoteActivity">
+    tools:context=".DetailNoteActivity">
 
     <EditText
         android:id="@+id/EditText_NewNoteActivity_NoteTitle"
@@ -25,7 +25,8 @@
         android:textSize="48sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:importantForAutofill="no" />
 
     <EditText
         android:id="@+id/EditText_NewNoteActivity_NoteContent"
@@ -43,7 +44,8 @@
         android:textSize="26sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/EditText_NewNoteActivity_NoteTitle" />
+        app:layout_constraintTop_toBottomOf="@+id/EditText_NewNoteActivity_NoteTitle"
+        android:importantForAutofill="no" />
 
     <Button
         android:id="@+id/Button_NewNoteActivity_SaveNote"
@@ -51,7 +53,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="50dp"
         android:layout_marginBottom="20dp"
-        android:text="@string/save_note"
+        android:text="@string/save_note_button_text"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -61,7 +63,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="50dp"
         android:layout_marginBottom="20dp"
-        android:text="@string/discard_note"
+        android:text="@string/discard_note_button_text"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

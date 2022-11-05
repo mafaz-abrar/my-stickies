@@ -37,7 +37,7 @@ class NoteViewModel(private val repo: MainRepository) : ViewModel() {
     }
 
     fun updateNote(noteID: Int, noteTitle: String, noteContent: String) {
-        val newNote = Note(noteID, noteTitle, noteContent, 0, "")
+        val newNote = Note(noteID, noteTitle, noteContent, 0, 0)
         update(newNote)
         Log.i("VIEW MODEL", "Updated Note: ${newNote.title}")
     }

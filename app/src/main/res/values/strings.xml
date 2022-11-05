@@ -1,12 +1,13 @@
 <resources>
     <string name="app_name">MyStickies</string>
-    <string name="add_note">Add a new note</string>
+    <string name="floating_button_hint">Add a new note</string>
 
     <string name="note_title_hint">Add a Title…</string>
     <string name="note_content_hint">Type your note contents here.</string>
 
-    <string name="save_note">Save</string>
-    <string name="discard_note">Discard</string>
+    <string name="save_note_button_text">Save</string>
+    <string name="discard_note_button_text">Discard</string>
+    <string name="delete_note_button_text">Delete</string>
 
     <string name="note_saved_message">Note saved.</string>
     <string name="note_missing_title_message">Missing title. Note discarded.</string>

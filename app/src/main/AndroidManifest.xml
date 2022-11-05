@@ -14,7 +14,7 @@
         android:theme="@style/Theme.MyStickies"
         tools:targetApi="31">
         <activity
-            android:name=".NewNoteActivity"
+            android:name=".DetailNoteActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"

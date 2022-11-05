@@ -56,8 +56,8 @@ class NotesAdapter(private val listener: (Note) -> Unit): ListAdapter<Note, Note
                 oldItem.id == newItem.id &&
                 oldItem.title == newItem.title &&
                 oldItem.content == newItem.content &&
-                oldItem.childrenCount == newItem.childrenCount &&
-                oldItem.children == newItem.children
+                oldItem.parentID == newItem.parentID &&
+                oldItem.childrenCount == newItem.childrenCount
             )
         }
     }

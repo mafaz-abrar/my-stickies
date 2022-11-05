@@ -23,17 +23,9 @@
         android:layout_marginEnd="25dp"
         android:layout_marginBottom="25dp"
         android:clickable="true"
-        android:contentDescription="@string/add_note"
+        android:contentDescription="@string/floating_button_hint"
         android:src="@android:drawable/ic_input_add"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/fragmentContainerView"
-        android:name="com.mafazabrar.mystickies.DetailNoteFragment"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        tools:layout="@layout/fragment_detail_note"
-        tools:layout_editor_absoluteX="142dp"
-        tools:layout_editor_absoluteY="112dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>

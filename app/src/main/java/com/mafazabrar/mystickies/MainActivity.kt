@@ -5,58 +5,51 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.ActionMode
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
-const val REQUEST_CODE_NEW_NOTE = 1
-const val REQUEST_CODE_UPDATE_NOTE = 2
-
-const val RESULT_MISSING_TITLE = 1
-
-const val KEY_REPLY_NOTE_ID = "KEY_REPLY_NOTE_ID"
-const val KEY_REPLY_NOTE_TITLE = "KEY_REPLY_NOTE_TITLE"
-const val KEY_REPLY_NOTE_CONTENT = "KEY_REPLY_NOTE_CONTENT"
-
-const val KEY_SCREEN_TITLE = "KEY_SCREEN_TITLE"
-
-const val KEY_NOTE_ID = "KEY_NOTE_ID"
-const val KEY_NOTE_TITLE = "KEY_NOTE_TITLE"
-const val KEY_NOTE_CONTENT = "KEY_NOTE_CONTENT"
-
 class MainActivity : AppCompatActivity() {
 
-    // Var to hold the Adapter
-    private lateinit var adapter: NotesAdapter
-
-    // Add the ViewModel as a member variable using the viewModels delegate
-    // We use a factory to pass in the argument repository
+    // Add the ViewModel as a member variable using the viewModels delegate.
+    // We use a factory to pass in the repository in the argument.
     private val viewModel: NoteViewModel by viewModels {
         NoteListViewModelFactory((application as MainApplication).repository)
     }
 
-    private fun launchUpdateActivity(note: Note) {
-        // On tap, start the New Note Activity for result
-        // with the Update Note request Code
-        val intent = Intent(this, NewNoteActivity::class.java)
-        intent.putExtra(KEY_SCREEN_TITLE, resources.getString(R.string.note_edit_title))
-        intent.putExtra(KEY_NOTE_ID, note.id)
-        intent.putExtra(KEY_NOTE_TITLE, note.title)
-        intent.putExtra(KEY_NOTE_CONTENT, note.content)
-        startActivityForResult(intent, REQUEST_CODE_UPDATE_NOTE)
+    // Var to hold the Adapter
+    private lateinit var adapter: NotesAdapter
+
+    // The OnClick listener for each item in the List View
+    private fun launchDetailNoteActivity(note: Note) {
+        // Create a new Detail Note Activity intent
+        val intent = Intent(this, DetailNoteActivity::class.java)
+
+        // Populate the intent
+        intent.putExtra(IntentKeys.STATE_KEY.keyString, DetailNoteScreenStates.EDIT)
+        intent.putExtra(IntentKeys.SCREEN_TITLE_KEY.keyString, resources.getString(R.string.note_edit_title))
+        intent.putExtra(IntentKeys.DELETE_NOTE_BUTTON_TEXT_KEY.keyString, resources.getString(R.string.delete_note_button_text))
+
+        intent.putExtra(IntentKeys.NOTE_ID_KEY.keyString, note.id)
+        intent.putExtra(IntentKeys.NOTE_TITLE_KEY.keyString, note.title)
+        intent.putExtra(IntentKeys.NOTE_CONTENT_KEY.keyString, note.content)
+
+        // Start the Intent for Result with the Update Note Request Code
+        startActivityForResult(intent, ActivityRequestCodes.UPDATE_NOTE_CODE.code)
     }
 
+    // This function is for using sub notes.
+    // Implemented later.
     private fun showNewStuff() {
         // Somehow change the list
         // submitted to the adapter.
         Log.i("MAIN ACTIVITY","New Stuff")
     }
 
+    // OnCreate method
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -77,7 +70,9 @@ class MainActivity : AppCompatActivity() {
                 showNewStuff()
             }
 
-            launchUpdateActivity(it)
+            // TODO: implement above functionality
+
+            launchDetailNoteActivity(it)
         }
         notesRecyclerView.adapter = adapter
 
@@ -96,12 +91,19 @@ class MainActivity : AppCompatActivity() {
         // Get the Floating Action Button
         val fab = findViewById<FloatingActionButton>(R.id.FAB_Main_AddNoteButton)
 
-        // On Click, start the New Note Activity for result, with the new note
-        // request code
+        // On Click, start the Detail Note Activity for result, with the Add Note
+        // Request Code
         fab.setOnClickListener {
-            val intent = Intent(this, NewNoteActivity::class.java)
-            intent.putExtra(KEY_SCREEN_TITLE, resources.getString(R.string.note_add_title))
-            startActivityForResult(intent, REQUEST_CODE_NEW_NOTE)
+            // Create a new intent
+            val intent = Intent(this, DetailNoteActivity::class.java)
+
+            // Populate the intent
+            intent.putExtra(IntentKeys.STATE_KEY.keyString, DetailNoteScreenStates.ADD)
+            intent.putExtra(IntentKeys.SCREEN_TITLE_KEY.keyString, resources.getString(R.string.note_add_title))
+            intent.putExtra(IntentKeys.DELETE_NOTE_BUTTON_TEXT_KEY.keyString, resources.getString(R.string.discard_note_button_text))
+
+            // Start the Detail Note Activity for Result
+            startActivityForResult(intent, ActivityRequestCodes.ADD_NOTE_CODE.code)
         }
     }
 
@@ -110,31 +112,30 @@ class MainActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
 
         // Get the data from the reply Intent
-        val title: String = data?.getStringExtra(KEY_REPLY_NOTE_TITLE) ?: ""
-        val content: String = data?.getStringExtra(KEY_REPLY_NOTE_CONTENT) ?: ""
+        val id: Int = data?.getIntExtra(IntentKeys.NOTE_ID_KEY.keyString, 0) ?: 0
+        val title: String = data?.getStringExtra(IntentKeys.NOTE_TITLE_KEY.keyString) ?: ""
+        val content: String = data?.getStringExtra(IntentKeys.NOTE_CONTENT_KEY.keyString) ?: ""
 
         Log.i("MAIN ACTIVITY RESULT", "Received Title: $title")
         Log.i("MAIN ACTIVITY RESULT", "Received Content: $content")
 
         // If the request and result codes are OK
-        if (requestCode == REQUEST_CODE_NEW_NOTE && resultCode == Activity.RESULT_OK) {
+        if (requestCode == ActivityRequestCodes.ADD_NOTE_CODE.code
+            && resultCode == Activity.RESULT_OK) {
 
             // Create a new Note using the data
             // Using the integer 0 as ID tells Room to auto-increment the ID
-            val newNote = Note(0, title, content, 0, "a")
+            val newNote = Note(id, title, content, 0, 0)
 
             // Save the new note in the database
             viewModel.insertNote(newNote)
 
             // Show a Toast to confirm the action
             Toast.makeText(applicationContext, R.string.note_saved_message, Toast.LENGTH_LONG).show()
-
-            Log.i("MAIN ACTIVITY", "Toast shown")
         }
 
-        else if (requestCode == REQUEST_CODE_UPDATE_NOTE && resultCode == Activity.RESULT_OK) {
-
-            val id: Int = data?.getIntExtra(KEY_REPLY_NOTE_ID, 0) ?: 0
+        else if (requestCode == ActivityRequestCodes.UPDATE_NOTE_CODE.code
+            && resultCode == Activity.RESULT_OK) {
 
             viewModel.updateNote(id, title, content)
 
