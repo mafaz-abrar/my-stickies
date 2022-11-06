@@ -77,7 +77,13 @@ class MainActivity : AppCompatActivity() {
             Observer { notes ->
                 Log.i("MAIN ACTIVITY OBSERVER", "Data updated.")
                 notes?.let {
-                    adapter.submitList(it)
+                    // There should only ever be a single element in the List of
+                    // NoteWithChildNotes. The first and only element's children
+                    // are to be displayed on the app's Main Screen
+
+                    val listOfChildNotes = it[0].childNotes
+
+                    adapter.submitList(listOfChildNotes)
                 }
             })
 

@@ -6,11 +6,14 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface NoteDao {
 
-    // Synchronous get
-    @Query("SELECT * FROM notes")
-    fun getNotes(): Flow<List<Note>>
+    // Synchronous get list of child notes
+    // whose parent note has ID noteID
+    @Transaction
+    @Query("SELECT * FROM notes WHERE id = :noteID")
+    fun getNoteWithChildNotes(noteID: Int): Flow<List<NoteWithChildNotes>>
 
-
+    // Synchronous get list of notes whose id is
+    // noteID
     @Query("SELECT * FROM notes WHERE id = :noteID")
     suspend fun getNote(noteID: Int): List<Note>
 

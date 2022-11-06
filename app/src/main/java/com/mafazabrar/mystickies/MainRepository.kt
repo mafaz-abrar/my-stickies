@@ -7,8 +7,14 @@ import kotlinx.coroutines.flow.Flow
 // Access the Note DAO from this repository, which manages data sources
 class MainRepository(private val noteDao: NoteDao) {
 
-    // Synchronous get
-    val allNotes: Flow<List<Note>> = noteDao.getNotes()
+    // Synchronous get - initialize by setting Parent Note as Root Note
+    // The Root Note is the only note that can't be viewed/edited, and it
+    // is the parent note for all top level notes. It has has ID -1
+    var allNotes: Flow<List<NoteWithChildNotes>> = noteDao.getNoteWithChildNotes(-1)
+
+    fun changeParentNoteForView(newParentNoteID: Int) {
+        allNotes = noteDao.getNoteWithChildNotes(newParentNoteID)
+    }
 
     // Coroutine get
     @WorkerThread
