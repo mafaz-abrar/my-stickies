@@ -16,7 +16,7 @@ class MainActivity : AppCompatActivity() {
     // Add the ViewModel as a member variable using the viewModels delegate.
     // We use a factory to pass in the repository in the argument.
     private val viewModel: NoteListViewModel by viewModels {
-        NoteListViewModelFactory((application as MainApplication).repository)
+        MainViewModelFactory((application as MainApplication).repository)
     }
 
     // Var to hold the Adapter

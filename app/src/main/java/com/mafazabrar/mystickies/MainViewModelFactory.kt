@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import java.lang.IllegalArgumentException
 
 // Set up a simple factory to create the ViewModel - this is needed to supply the argument
-class NoteListViewModelFactory(private val repository: MainRepository) : ViewModelProvider.Factory {
+class MainViewModelFactory(private val repository: MainRepository) : ViewModelProvider.Factory {
     override fun <T: ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(NoteListViewModel::class.java)) {
             return NoteListViewModel(repository) as T

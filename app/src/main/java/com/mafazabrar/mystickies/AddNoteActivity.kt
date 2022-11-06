@@ -7,7 +7,6 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.activity.viewModels
-import androidx.lifecycle.ViewModelProvider
 
 // This Activity will store a new Note into the database,
 // as added by the user.
@@ -16,7 +15,7 @@ class AddNoteActivity : AppCompatActivity() {
     // Add the ViewModel as a member variable using the viewModels delegate.
     // We use a factory to pass in the repository in the argument.
     private val viewModel: AddNoteViewModel by viewModels {
-        NoteListViewModelFactory((application as MainApplication).repository)
+        MainViewModelFactory((application as MainApplication).repository)
     }
 
     // Var to track whether an input error occurred
