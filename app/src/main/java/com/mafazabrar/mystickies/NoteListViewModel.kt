@@ -1,60 +1,55 @@
 package com.mafazabrar.mystickies
 
+import android.app.Activity
 import android.util.Log
 import androidx.lifecycle.*
+import androidx.lifecycle.viewmodel.viewModelFactory
 import kotlinx.coroutines.launch
 import java.lang.IllegalArgumentException
 
 // View Model for each Note
-class NoteViewModel(private val repo: MainRepository) : ViewModel() {
+class NoteListViewModel(private val repo: MainRepository) : ViewModel() {
 
     // Init block
     init {
-        Log.i("NOTE VIEW MODEL", "View Model created.")
+        Log.i("NOTE LIST VIEW MODEL", "View Model created.")
     }
 
-    // Synchronous get
+    // Synchronous get the list of Notes for the current context
     val allNotes: LiveData<List<Note>> = repo.allNotes.asLiveData()
 
-    // Launching scope for coroutine
-    private fun insert(note: Note) = viewModelScope.launch {
-        repo.insert(note)
-    }
-
-    // Launching scope for coroutine
-    private fun update(note: Note) = viewModelScope.launch {
-        repo.update(note)
-    }
-
-    // Launching scope for coroutine
+    // Launching scope for delete all coroutine
     private fun deleteAll() = viewModelScope.launch {
         repo.deleteAll()
     }
 
-    fun insertNote(note: Note) {
-        insert(note)
-        Log.i("VIEW MODEL","Inserted Note: ${note.title}")
-    }
+    ////////////////////////////////
+    //////// PUBLIC FUNCTIONS //////
+    ////////////////////////////////
 
-    fun updateNote(noteID: Int, noteTitle: String, noteContent: String) {
-        val newNote = Note(noteID, noteTitle, noteContent, 0, 0)
-        update(newNote)
-        Log.i("VIEW MODEL", "Updated Note: ${newNote.title}")
-    }
-
-    fun deleteAllNotes()
-    {
+    // Delete all notes
+    // For debugging purposes
+    fun deleteAllNotes() {
         deleteAll()
         Log.i("VIEW MODEL", "Deleted all notes.")
     }
-}
 
-// Set up a simple factory to create the ViewModel - this is needed to supply the argument
-class NoteListViewModelFactory(private val repository: MainRepository) : ViewModelProvider.Factory {
-    override fun <T: ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(NoteViewModel::class.java)) {
-            return NoteViewModel(repository) as T
+    // Return a status message (string resource reference) depending
+    // on the result code received
+    fun getStatusMessage(
+        resultCode: Int,
+    ): Int {
+
+        Log.i("NOTE LIST VIEW MODEL", "Received result code: $resultCode")
+
+        return when (resultCode) {
+            ActivityResultCodes.MISSING_TITLE_CODE.code -> R.string.note_missing_title_message
+            ActivityResultCodes.SAVED_NEW_NOTE_CODE.code -> R.string.note_saved_message
+            ActivityResultCodes.DISCARDED_NEW_NOTE_CODE.code -> R.string.note_discarded_message
+            ActivityResultCodes.UPDATED_NOTE_CODE.code -> R.string.note_saved_message
+            ActivityResultCodes.DELETED_NOTE_CODE.code -> R.string.note_deleted_message
+            else -> { -1 }
         }
-        throw IllegalArgumentException("Unknown ViewModel class.")
     }
 }
+

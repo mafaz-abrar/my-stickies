@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/orange_gold_lighter"
-    tools:context=".DetailNoteActivity">
+    tools:context=".AddNoteActivity">
 
     <EditText
         android:id="@+id/EditText_NewNoteActivity_NoteTitle"

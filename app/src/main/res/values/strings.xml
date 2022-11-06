@@ -10,7 +10,7 @@
     <string name="delete_note_button_text">Delete</string>
 
     <string name="note_saved_message">Note saved.</string>
-    <string name="note_missing_title_message">Missing title. Note discarded.</string>
+    <string name="note_missing_title_message">Missing title! Note not saved.</string>
     <string name="note_discarded_message">Note discarded.</string>
     <string name="note_deleted_message">Note deleted.</string>
 

@@ -10,6 +10,12 @@ class MainRepository(private val noteDao: NoteDao) {
     // Synchronous get
     val allNotes: Flow<List<Note>> = noteDao.getNotes()
 
+    // Coroutine get
+    @WorkerThread
+    suspend fun getNote(noteID: Int) {
+        noteDao.getNote(noteID)
+    }
+
     // Coroutine insert
     @WorkerThread
     suspend fun insert(note: Note) {
@@ -23,6 +29,12 @@ class MainRepository(private val noteDao: NoteDao) {
     }
 
     // Coroutine delete
+    @WorkerThread
+    suspend fun delete(note: Note) {
+        noteDao.delete(note)
+    }
+
+    // Coroutine delete all
     @WorkerThread
     suspend fun deleteAll() {
         noteDao.deleteAll()
