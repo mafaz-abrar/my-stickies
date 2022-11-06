@@ -2,10 +2,5 @@ package com.mafazabrar.mystickies
 
 enum class IntentKeys(val keyString: String) {
     NOTE_KEY("NOTE_KEY"),
-    NOTE_ID_KEY("NOTE_ID_KEY"),
-    NOTE_TITLE_KEY("NOTE_TITLE_KEY"),
-    NOTE_CONTENT_KEY("NOTE_CONTENT_KEY"),
-    SCREEN_TITLE_KEY("SCREEN_TITLE_KEY"),
-    DELETE_NOTE_BUTTON_TEXT_KEY("DELETE_NOTE_BUTTON_TEXT_KEY"),
-    STATE_KEY("STATE_KEY")
+    PARENT_NOTE_ID_KEY("PARENT_NOTE_ID_KEY"),
 }

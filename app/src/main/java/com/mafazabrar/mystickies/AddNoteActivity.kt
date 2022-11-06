@@ -32,8 +32,11 @@ class AddNoteActivity : AppCompatActivity() {
         val currentNoteTitle = noteTitleEditTextView.text.toString()
         val currentNoteContent = noteContentEditTextView.text.toString()
 
+        // Get the data from the intent
+        val parentNoteID = intent.getIntExtra(IntentKeys.PARENT_NOTE_ID_KEY.keyString, 0)
+
         // Resolve in ViewModel
-        val resultCode = viewModel.resolveInsertNote(userAction, currentNoteTitle, currentNoteContent)
+        val resultCode = viewModel.resolveInsertNote(userAction, currentNoteTitle, currentNoteContent, parentNoteID)
         val replyIntent = viewModel.getReplyIntent()
 
         Log.i("ADD NOTE ACTIVITY", "Received result code: $resultCode")

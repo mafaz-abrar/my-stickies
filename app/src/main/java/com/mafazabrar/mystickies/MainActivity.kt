@@ -79,8 +79,13 @@ class MainActivity : AppCompatActivity() {
                 notes?.let {
                     // There should only ever be a single element in the List of
                     // NoteWithChildNotes. The first and only element's children
-                    // are to be displayed on the app's Main Screen
+                    // are to be displayed on the app's Main Screen.
 
+
+                    // Slight issue: On first install, the Root Note creation
+                    // is slower than launching this activity. I.e., when this
+                    // app tries to find the root note, it doesn't exist yet, so
+                    // app crashes. :(
                     val listOfChildNotes = it[0].childNotes
 
                     adapter.submitList(listOfChildNotes)
@@ -97,6 +102,11 @@ class MainActivity : AppCompatActivity() {
         // Button request code
         fab.setOnClickListener {
             val intent = Intent(this, AddNoteActivity::class.java)
+
+            val parentNoteID = viewModel.getParentNoteIDForCurrentListView()
+
+            intent.putExtra(IntentKeys.PARENT_NOTE_ID_KEY.keyString, parentNoteID)
+
             startActivityForResult(intent, ActivityRequestCodes.FLOATING_BUTTON_CODE.code)
         }
     }

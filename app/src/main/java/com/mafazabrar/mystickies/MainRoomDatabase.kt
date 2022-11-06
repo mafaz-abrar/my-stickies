@@ -2,6 +2,7 @@ package com.mafazabrar.mystickies
 
 import android.content.Context
 import android.util.Log
+import androidx.lifecycle.asLiveData
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
@@ -32,13 +33,20 @@ public abstract class MainRoomDatabase : RoomDatabase() {
                         var noteDao = database.noteDao()
 
                         // Check if Root Note exists at ID -1
-                        val notes = noteDao.getNote(-1)
+                        val note = noteDao.getNote(-1)
+
+
 
                         // If not, create Root Note
-                        if (notes.isEmpty()) {
+                        if (note == null) {
                             val root_note = Note(-1, "", "", 0, 0)
                             noteDao.insert(root_note)
+                            Log.i("DATABASE CLASS" ,"Null root - created new root.")
                         }
+                        else {
+                            Log.i("DATABASE CLASS" ,"Found existing root - id: ${note.id}")
+                        }
+
                     }
                 }
             }

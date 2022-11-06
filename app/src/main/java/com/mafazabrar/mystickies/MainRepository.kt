@@ -1,6 +1,7 @@
 package com.mafazabrar.mystickies
 
 import androidx.annotation.WorkerThread
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.asLiveData
 import kotlinx.coroutines.flow.Flow
 
@@ -18,8 +19,8 @@ class MainRepository(private val noteDao: NoteDao) {
 
     // Coroutine get
     @WorkerThread
-    suspend fun getNote(noteID: Int) {
-        noteDao.getNote(noteID)
+    suspend fun getNote(noteID: Int): Note {
+        return noteDao.getNote(noteID)
     }
 
     // Coroutine insert

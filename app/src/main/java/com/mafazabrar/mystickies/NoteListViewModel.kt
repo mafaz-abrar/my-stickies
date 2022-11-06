@@ -15,11 +15,19 @@ class NoteListViewModel(private val repo: MainRepository) : ViewModel() {
         Log.i("NOTE LIST VIEW MODEL", "View Model created.")
     }
 
+    var parentNoteID: Int = -1
+
     // Synchronous get the list of Notes for the current context
     val allNotes: LiveData<List<NoteWithChildNotes>> = repo.allNotes.asLiveData()
 
-    private fun changeParentNoteForView(newParentNoteID: Int) {
-        repo.changeParentNoteForView(newParentNoteID)
+
+    fun changeParentNoteIDForCurrentListView(newParentNoteID: Int) {
+        parentNoteID = newParentNoteID
+        repo.changeParentNoteForView(parentNoteID)
+    }
+
+    fun getParentNoteIDForCurrentListView(): Int {
+        return parentNoteID
     }
 
     // Launching scope for delete all coroutine

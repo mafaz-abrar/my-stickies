@@ -15,7 +15,10 @@ interface NoteDao {
     // Synchronous get list of notes whose id is
     // noteID
     @Query("SELECT * FROM notes WHERE id = :noteID")
-    suspend fun getNote(noteID: Int): List<Note>
+    suspend fun getNote(noteID: Int): Note
+
+    //@Query("SELECT * FROM notes WHERE id = :noteID")
+    //fun getNoteSync()
 
     // Coroutine insert
     @Insert
