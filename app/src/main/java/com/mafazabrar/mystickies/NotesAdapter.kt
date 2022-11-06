@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 
-class NotesAdapter(private val listener: (Note) -> Unit): ListAdapter<Note, NotesAdapter.NoteViewHolder>(WordsComparator()) {
+class NotesAdapter(private val listener: (Note) -> Unit): ListAdapter<Note, NotesAdapter.NoteViewHolder>(NotesComparator()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoteViewHolder {
         val view: View = LayoutInflater.from(parent.context)
@@ -45,7 +45,7 @@ class NotesAdapter(private val listener: (Note) -> Unit): ListAdapter<Note, Note
     }
 
     // This utility class checks if these items are different or the same.
-    class WordsComparator : DiffUtil.ItemCallback<Note>() {
+    class NotesComparator : DiffUtil.ItemCallback<Note>() {
 
         override fun areItemsTheSame(oldItem: Note, newItem: Note): Boolean {
             return oldItem === newItem
