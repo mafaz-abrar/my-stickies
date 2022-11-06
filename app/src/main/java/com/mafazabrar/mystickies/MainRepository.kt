@@ -10,12 +10,6 @@ class MainRepository(private val noteDao: NoteDao) {
     // Synchronous get
     val allNotes: Flow<List<Note>> = noteDao.getNotes()
 
-    // Coroutine get
-    @WorkerThread
-    suspend fun getNote(noteID: Int) {
-        noteDao.getNote(noteID)
-    }
-
     // Coroutine insert
     @WorkerThread
     suspend fun insert(note: Note) {
