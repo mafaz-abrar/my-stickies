@@ -34,14 +34,6 @@ class MainActivity : AppCompatActivity() {
         startActivityForResult(intent, ActivityRequestCodes.DETAIL_NOTE_CODE.code)
     }
 
-    // This function is for using sub notes.
-    // Implemented later.
-    private fun showNewStuff() {
-        // Somehow change the list
-        // submitted to the adapter.
-        Log.i("MAIN ACTIVITY","New Stuff")
-    }
-
     // OnCreate method
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,15 +50,6 @@ class MainActivity : AppCompatActivity() {
         adapter = NotesAdapter() {
             // Listener that launches the "New" Note Activity
             // for viewing and updating the Note.
-
-            // Check if parent note was clicked,
-            // submit a different list if parent
-            // note clicked.
-            if (1 == 1) {
-                showNewStuff()
-            }
-
-            // TODO: implement above functionality
 
             launchDetailNoteActivity(it)
         }
